@@ -1,17 +1,23 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import './index.css';
 import App from './Components/App';
-import * as serviceWorker from './serviceWorker';
+import todosReducer from "./Reducers/reducer.js";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+
+let store = createStore(todosReducer);
 
 const Index = () => (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <App/>
+        <Provider store={store}>
+            <Route render={(props) => 
+                <App pathname={props.location.pathname} />
+            }>
+            </Route>
+        </Provider>
     </BrowserRouter>
 );
 
-// ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(<Index />, document.getElementById('root'));
-// first param has to be component
